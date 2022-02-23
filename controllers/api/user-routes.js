@@ -99,7 +99,16 @@ router.post("/", (req, res) => {
   });
 
   // adding a logout route that will destroy the session variables and reset the cookie
-  router.post("/logout", (req, res) => {});
+  router.post("/logout", (req, res) => {
+    if (req.session.loggedIn) {
+      req.session.destroy(() => {
+        res.status(204).end();
+      });
+    }
+    else {
+      res.status(404).end();
+    }
+  });
 
   router.put("/:id", (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
