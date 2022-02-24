@@ -84,8 +84,11 @@ router.get('/post/:id', (req, res) => {
     // serialize the data
     const post = dbPostData.get({ plain: true });
 
-    // pass data to template
-    res.render('single-post', { post });
+    // pass data to template but require user to be logged in to display
+    res.render('single-post', { 
+      post,
+      loggedIn: req.session.loggedIn
+     });
   })
     .catch(err => {
       console.log(err);
